@@ -26,9 +26,8 @@ def index():
 
 @app.route('/api/')
 def api():
-    data = [module.get_json() for module in globals()['modules'].values()]
+    data = [module.get_json() for module in init().values()]
     return jsonify(data)
 
 if __name__ == "__main__":
-    globals()['modules'] = init()
     app.run()
