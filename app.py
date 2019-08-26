@@ -21,10 +21,6 @@ def init() -> dict:
     return modules
 
 @app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/api/')
 def api():
     data = [module.get_json() for module in init().values()]
     return jsonify(data)
