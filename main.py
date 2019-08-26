@@ -31,4 +31,4 @@ def api():
 
 if __name__ == "__main__":
     globals()['modules'] = init()
-    app.run()
+    app.run(port=80)
