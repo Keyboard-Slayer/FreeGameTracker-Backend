@@ -22,7 +22,7 @@ def init() -> dict:
 
 @app.route('/')
 def api():
-    data = [module.get_json() for module in init().values()]
+    data = dict([(module.get_name(), module.get_json()) for module in init().values()])
     return jsonify(data)
 
 if __name__ == "__main__":

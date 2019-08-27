@@ -8,6 +8,9 @@ from urllib.request import (
 
 import json
 
+def get_name() -> str:
+    return "ubisoft"
+
 def get_json() -> str:
     feed_link = ""
     app_id = ""
