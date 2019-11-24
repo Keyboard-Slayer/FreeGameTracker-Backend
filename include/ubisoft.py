@@ -29,7 +29,8 @@ def get_json() -> str:
 
 
     for game in json.loads(urlopen(req).read().decode())['news']:
-        if game['type'] == "freegame":
+        
+        if game['type'] == "freegame" or game['type'] == "freeweekend":
             free_game.append({"name": game["body"],
                               "expiration": game["expirationDate"],
                               "mediaURL": game["mediaURL"],
