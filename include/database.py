@@ -14,7 +14,7 @@ class Database:
         self.conn = sqlite3.connect("game.db")
         self.cur = self.conn.cursor()
         
-        if have2create:
+        if not have2create:
             self.create_db()
 
 
