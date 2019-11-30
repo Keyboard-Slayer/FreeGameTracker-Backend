@@ -8,15 +8,13 @@ from urllib.request import (
 
 import json
 
-def get_name() -> str:
-    return "ubisoft"
 
-def get_json() -> str:
+def get_games() -> dict:
     feed_link = ""
     app_id = ""
     free_game = []
-
     data = urlopen("https://free.ubisoft.com/configuration.js").read()
+
     for line in data.decode().split('\n'):
         if 'prod' in line and 'https' in line:
             feed_link = ':'.join(line.split(':')[-2:]).replace('\'', '')
@@ -28,12 +26,11 @@ def get_json() -> str:
     req.add_header('ubi-appid', app_id)
 
 
-    for game in json.loads(urlopen(req).read().decode())['news']:
-        
+    for game in json.loads(urlopen(req).read().decode())['news']:        
         if game['type'] == "freegame" or game['type'] == "freeweekend":
-            free_game.append({"name": game["body"],
-                              "expiration": game["expirationDate"],
-                              "mediaURL": game["mediaURL"],
-                              "publicationDate": game["publicationDate"],
-                              "link": game["links"][0]["param"]})
+            free_game.append((game["body"],
+                              game["expirationDate"].split('T')[0],
+                              game["mediaURL"],
+                              game["links"][0]["param"]))
+
     return free_game

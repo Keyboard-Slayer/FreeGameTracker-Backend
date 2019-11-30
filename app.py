@@ -4,6 +4,9 @@
 import os
 import sys
 
+from datetime import datetime
+from include.database import Database
+
 from flask import (
     Flask,
     jsonify,
@@ -12,17 +15,35 @@ from flask import (
 
 app = Flask(__name__)
 
-def init() -> dict:
-    modules = {}
-    for module in os.listdir("./include"):
-        if module.split('.')[-1] == "py" and module != "__init__.py":
-            exec("import include.{0} as {0}".format('.'.join(module.split('.')[:-1])))
-            modules['.'.join(module.split('.')[:-1])] = eval(f"{'.'.join(module.split('.')[:-1])}")
-    return modules
 
-@app.route('/')
-def api():
-    data = dict([(module.get_name(), module.get_json()) for module in init().values()])
+def beautify(data: list) -> list:
+    result = []
+
+    for game in data:
+        result.append({"name": game[1],
+                       "expiration": game[2],
+                       "mediaURL": game[3],
+                       "link": game[4]})
+    
+    return result
+
+def init() -> list:
+    day = datetime.today().weekday()
+    database = Database()
+
+    if day in [0, 4]: 
+        database.fetch_from_web()
+
+    database.check_date()
+    data = beautify(database.fetch_data())
+
+    return data
+
+
+@app.route("/")
+def index():
+    data = init()
+    
     return jsonify(data)
 
 if __name__ == "__main__":
