@@ -9,7 +9,7 @@ from urllib.request import (
 import json
 
 
-def get_games() -> dict:
+def get_games() -> list:
     feed_link = ""
     app_id = ""
     free_game = []
