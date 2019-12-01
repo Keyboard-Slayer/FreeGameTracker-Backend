@@ -23,7 +23,9 @@ def beautify(data: list) -> list:
         result.append({"name": game[1],
                        "expiration": game[2],
                        "mediaURL": game[3],
-                       "link": game[4]})
+                       "link": game[4],
+                       "source": game[5],
+                       "color": game[6]})
     
     return result
 

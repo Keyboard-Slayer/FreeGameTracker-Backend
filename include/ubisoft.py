@@ -9,6 +9,10 @@ from urllib.request import (
 import json
 
 
+def get_siteinfo() -> tuple:
+    return ("Ubisoft", "#879fcd")
+
+
 def get_games() -> list:
     feed_link = ""
     app_id = ""
@@ -32,6 +36,6 @@ def get_games() -> list:
             free_game.append((game["body"],
                               expiration,
                               game["mediaURL"],
-                              game["links"][0]["param"]))
+                              game["links"][0]["param"]) + get_siteinfo())
 
     return free_game

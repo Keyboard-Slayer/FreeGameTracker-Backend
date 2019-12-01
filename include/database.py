@@ -20,7 +20,7 @@ class Database:
 
 
     def create_db(self):
-        self.cur.execute("CREATE TABLE games (id INTEGER PRIMARY KEY, name TEXT, exp TEXT, media TEXT, link TEXT)")
+        self.cur.execute("CREATE TABLE games (id INTEGER PRIMARY KEY, name TEXT, exp TEXT, media TEXT, link TEXT, source TEXT, color TEXT)")
         self.conn.commit()
 
     
@@ -59,12 +59,13 @@ class Database:
                 
                 module = eval(f"{'.'.join(module.split('.')[:-1])}")
                 games += module.get_games()
+                print(games)
                 
                 del module
         
         for game in games:
             if game[-1] not in [game[-1] for game in db]:
-                self.cur.execute("INSERT INTO games VALUES (NULL, ?, ?, ?, ?)", game)
+                self.cur.execute("INSERT INTO games VALUES (NULL, ?, ?, ?, ?, ?, ?)", game)
             
         self.conn.commit()
 
