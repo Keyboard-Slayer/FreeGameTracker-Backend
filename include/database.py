@@ -9,13 +9,14 @@ from datetime import datetime
 
 class Database:
     def __init__(self):
-        have2create = os.path.isfile("../game.db")
+        have2create = os.path.isfile("./game.db")
         
         self.conn = sqlite3.connect("game.db")
         self.cur = self.conn.cursor()
         
         if not have2create:
             self.create_db()
+            self.fetch_from_web()
 
 
     def create_db(self):

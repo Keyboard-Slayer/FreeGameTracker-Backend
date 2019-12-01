@@ -28,8 +28,9 @@ def get_games() -> list:
 
     for game in json.loads(urlopen(req).read().decode())['news']:        
         if game['type'] == "freegame" or game['type'] == "freeweekend":
+            expiration = None if game["expirationDate"] is None else game["expirationDate"].split('T')[0]
             free_game.append((game["body"],
-                              game["expirationDate"].split('T')[0],
+                              expiration,
                               game["mediaURL"],
                               game["links"][0]["param"]))
 
